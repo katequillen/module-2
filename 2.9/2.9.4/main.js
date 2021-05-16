@@ -22,9 +22,40 @@ const tasks = [
 ];
 
 function paintTasks() {
+  let html ="";
+  let className = "";
+  let checked = "";
   for (let i=0; i <tasks.length; i++) {
     let task = task[i];
+    if(task.completed === true){
+        className = "crossout";
+        checked = "checked";
+    }
+    else{
+      className = "";
+      checked = "";
+    }
+
     html += `<li> `
-    html += `<input type="checkbox">`
+    html += `<input class="js-checkbox" type="checkbox" value="${i}" ${checked}/>`;
+    html += `${task.name} </li>`;
+  }
+  ulElement.innerHTML = html;
+  listenClick();
+}
+
+
+function listenClick () {
+  const checkboxElements =document.querySelectorAll(".js-checkbox");
+  for(let i=0; i< checkboxElements.length; i++) {
+    checkboxElements[i].addEventListener("change", handlerCheck);
   }
 }
+
+function handlerCheck(evt){
+  console.log(evt.target.value);
+  const clicked = evt.target.value;
+  tasks[clicked] = !tasks[clicked].completed;
+}
+
+paintTasks();
