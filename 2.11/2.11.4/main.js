@@ -1,16 +1,17 @@
-fetch('https://dog.ceo/api/breeds/list')
-  .then(response => response.json())
-  .then(data => {
-    console.log('Breeds data response: ', data);
+function setLocalStorage() {
+  localStorage.setItem("localList", JSON.stringify(recipes));
+}
 
-    const ul = document.querySelector('ul');
-    const breeds = data.message;
-    let ulContent = '';
+//^this is the function to save something in local storage
 
-    for (const breed of breeds) {
-      const breedContent = `<li>${breed}</li>`;
-      ulContent += breedContent;
-    }
-    ul.innerHTML = ulContent;
-  })
-  .catch(error => console.log(`Ha sucedido un error: ${error}`));
+function getLocalStorage() {
+  let list = JSON.parse(localStorage.getItem("localList"));
+  console.log(list);
+  if (list != null) {
+    //^this says, if list is different from null...
+    return list;
+  } else {
+    return (list = []);
+    //^this says, if not, return an empty array. this way it never returns null, which would produce an error
+  }
+}
